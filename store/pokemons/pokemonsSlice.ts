@@ -2,17 +2,16 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import {HYDRATE} from "next-redux-wrapper";
 import {AppState, AppThunk} from "@/store/store";
+import axios from "axios";
 
 
-type PokemonsState = {
+interface PokemonsState  {
     pokemons: Pokemon[];
-    currentPokemon: PokemonDetails | null;
     pokemonsCount: number;
 };
 
 const initialState: PokemonsState = {
     pokemons: [],
-    currentPokemon: null,
     pokemonsCount: 0
 };
 export const pokemonsSlice = createSlice({
@@ -20,7 +19,6 @@ export const pokemonsSlice = createSlice({
     initialState,
     reducers: {
         setPokemons: (state, action: PayloadAction<{pokemons: Pokemon[],pokemonsCount: number}>) => {
-           console.log('setPokemons', state.pokemons)
             state.pokemons = action.payload.pokemons;
             state.pokemonsCount = action.payload.pokemonsCount
         },
@@ -33,7 +31,6 @@ export const pokemonsSlice = createSlice({
             }
 
             state.pokemons = action.payload.pokemons.pokemons
-            // state.currentPokemon = action.payload.pokemons.currentPokemon;
             state.pokemonsCount = action.payload.pokemons.pokemonsCount;
         },
     },
@@ -41,13 +38,13 @@ export const pokemonsSlice = createSlice({
 })
 export const { setPokemons } = pokemonsSlice.actions
 
+type Query = string | string[] | undefined
 export const fetchPokemons =
-    (offset: string | string[] | undefined, limit:  string | string[] | undefined): AppThunk =>
+    (offset: Query, limit:  Query): AppThunk =>
         async dispatch => {
-            const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
+            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`)
 
-            const pokemons = await response.json();
-            console.log({pokemons})
+            const pokemons =  response.data;
             dispatch(
                 setPokemons({pokemons: pokemons.results, pokemonsCount: pokemons.count}),
             );

@@ -3,9 +3,10 @@ import {DataGrid} from "@mui/x-data-grid";
 
 export const StyledDataGrid = styled(DataGrid)(() => ({
     color: "#FFFFFF",
-    // height: "100%",
+    fontSize: "inherit",
     '& .MuiToolbar-root': {
         color: '#FFFFFF',
+        fontSize: "1.5rem",
     },
     '& .MuiTablePagination-selectIcon': {
         color: '#FFFFFF',
@@ -13,4 +14,10 @@ export const StyledDataGrid = styled(DataGrid)(() => ({
     '& .MuiButtonBase-root': {
         color: '#FFFFFF',
     },
+    '& .MuiTablePagination-displayedRows': {
+        fontSize: "inherit"
+    },
+    '& .MuiTablePagination-selectLabel': {
+        fontSize: "inherit"
+    }
 }));

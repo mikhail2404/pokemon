@@ -32,9 +32,10 @@ const PokemonGrid: React.FC = () => {
         router.push({pathname: router.pathname, query: {offset: (page + 1) * pageSize, limit: pageSize}})
     }
     const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+        router.push(`/pokemon/${params.row.name}`)
     }
     return (
-            <StyledDataGrid   rowHeight={150} initialState={{pagination: { paginationModel: {page: initialPage, pageSize: limit ? +limit : 20} }}} paginationMode="server"   onRowClick={handleRowClick} rowCount={pokemonsCount} rows={rows} columns={columns} pageSizeOptions={[20, 50, 100]}  onPaginationModelChange={({page, pageSize}) => paginationModelChangeHandler(page, pageSize) }/>
+            <StyledDataGrid   rowHeight={120}  initialState={{pagination: { paginationModel: {page: initialPage, pageSize: limit ? +limit : 20} }}} paginationMode="server"   onRowClick={handleRowClick} rowCount={pokemonsCount} rows={rows} columns={columns} pageSizeOptions={[20, 50, 100]}  onPaginationModelChange={({page, pageSize}) => paginationModelChangeHandler(page, pageSize) }/>
     );
 };
 
