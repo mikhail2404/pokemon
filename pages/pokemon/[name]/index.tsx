@@ -3,13 +3,16 @@ import {GetServerSideProps} from "next";
 import Image from "next/image";
 import { Stack} from "@mui/material";
 import axios from "axios";
+import {useSelector} from "react-redux";
+import {selectPokemons} from "@/store/pokemons/pokemonsSlice";
 
 interface PokemonProps {
     pokemon: PokemonDetails;
 }
 
 const Pokemon: React.FC<PokemonProps> = ({pokemon}) => {
-    console.log({pokemon})
+    const {pokemons, pokemonsCount} =  useSelector(selectPokemons)
+    console.log({pokemons, pokemonsCount})
     return (
         <Stack className="items-center	 justify-center">
             <Image
